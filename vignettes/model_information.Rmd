@@ -1,0 +1,41 @@
+---
+title: "model_information"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(mrgsolve)
+library(overseer)
+```
+
+
+```{r}
+models <- source("../models/models.R")$value
+```
+
+
+
+```{r}
+available_models <- models$available()
+```
+
+```{r}
+model_list <- map(available_models, ~ models$use(.x)) %>% setNames(available_models)
+```
+
+```{r }
+tmp <- map(model_list, function(m) {
+  see(m)
+  cat("-----------------------------------")
+  invisible()
+  })
+```
+
+
+```{r}
+devtools::session_info()
+```
+
+
