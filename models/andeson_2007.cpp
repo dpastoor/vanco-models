@@ -1,6 +1,6 @@
 // details:
-// from lo et al 2010 - Population pharmacokinetics of vancomycin in premature Malaysian neonates:
-// identification of predictors for dosing determination.
+// from anderson et al 2007 - Vancomycin pharmacokinetics in preterm neonates and 
+// the prediction of adult clearance.
 
 [PARAM] @annotated
 CL  : 0.345 : Clearance (L/hr)
@@ -8,9 +8,10 @@ V   : 1.75  : Volume (L)
 wt  : 2.9   : Weight (kg)
 pma : 34.8  : post-menstral age (wk)
 scr : 0.9   : serum creatinine (mg/dL)
-Fsga : 1    : small-for-gestational-age
-spiro : 0   : spironolactone (L/kg)
-
+RDV : 0     : observed dv value (mg/L)
+CID : 0     : Base ID
+Fventilation : 
+Finotrope :
 
 [CMT] @annotated
 CENT : Central compartment (mg)
@@ -21,9 +22,11 @@ ncmt=1, trans=11
 [MAIN]
 D_CENT = 1; 
 double NORM_WT = 70;
-double NORM_PMA = 30;
-double CLi = 1.0 * pow((wt/NORM_WT), 0.75) * pow((pma/NORM_PMA), 3.16) * Fsga
-double Vi = 0.572 * (1-0.344*spiro) * wt
+double NORM_PMA = 34.8;
+double Fventilation = ;
+double Finotrope = ;
+double CLi = 3.83*pow(wt/NORM_WT,0.75)*(pow(pma, 3.68)/(pow(pma, 3.68) + pow(33.3, 3.68)))*(516*pow(e, (0.00823*((PMA-40)/52-40)))/scr)/6)*Fventilation;
+double Vi = 39.4*(wt/NORM_WT)*Finotrope;
 
 [OMEGA] @annotated
   ECL : 0.04 : Eta on CL
@@ -45,5 +48,7 @@ double DV = CP*(1+PROP);
   wt  : Weight (kg)
   pma : post-menstral age (wk)
   scr : serum creatinine (mg/dL)
-  Fsga : small-for-gestational-age
-  spiro : spironolactone (L/kg)
+  RDV : observed dv value (mg/L)
+  CID : Base ID
+  Fventilation :
+  Finotrope :3
