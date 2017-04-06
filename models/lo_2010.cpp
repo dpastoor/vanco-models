@@ -1,6 +1,6 @@
 // details:
-// from anderson et al 2007 - Vancomycin pharmacokinetics in preterm neonates and 
-// the prediction of adult clearance.
+// from lo et al 2010 - Population pharmacokinetics of vancomycin in premature 
+// Malaysian neonates: identification of predictors for dosing determination.
 
 [PARAM] @annotated
 CL  : 0.345 : Clearance (L/hr)
@@ -10,8 +10,6 @@ pma : 34.8  : post-menstral age (wk)
 scr : 0.9   : serum creatinine (mg/dL)
 RDV : 0     : observed dv value (mg/L)
 CID : 0     : Base ID
-Fventilation :
-Finotrope :
 
 [CMT] @annotated
 CENT : Central compartment (mg)
@@ -23,9 +21,7 @@ ncmt=1, trans=11
 D_CENT = 1; 
 double NORM_WT = 70;
 double NORM_PMA = 34.8;
-double Fventilation = ;
-double Finotrope = ;
-double CLi = 3.83*pow(wt/NORM_WT,0.75)*(pow(pma, 3.68)/(pow(pma, 3.68) + pow(33.3, 3.68)))*(516*pow(e, (0.00823*((PMA-40)/52-40)))/scr)/6)*Fventilation;
+double CLi = 3.83*pow(wt/NORM_WT,0.75)*(pow(pma, 3.68)/(pow(pma, 3.68) + pow(33.3, 3.68)))*(516*EXP(0.00823*((PMA-40)/52-40)))/scr)/6)*Fventilation;
 double Vi = 39.4*(wt/NORM_WT)*Finotrope;
 
 [OMEGA] @annotated
@@ -50,5 +46,3 @@ double DV = CP*(1+PROP);
   scr : serum creatinine (mg/dL)
   RDV : observed dv value (mg/L)
   CID : Base ID
-  Fventilation :
-  Finotrope :3
