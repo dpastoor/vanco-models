@@ -23,8 +23,6 @@ ncmt=1, trans=11
 D_CENT = 1; 
 double NORM_WT = 70;
 double NORM_PMA = 34.8;
-double Fventilation = ;
-double Finotrope = ;
 double CLi = 3.83*pow(wt/NORM_WT,0.75)*(pow(pma, 3.68)/(pow(pma, 3.68) + pow(33.3, 3.68)))*(516*pow(e, (0.00823*((PMA-40)/52-40)))/scr)/6)*Fventilation;
 double Vi = 39.4*(wt/NORM_WT)*Finotrope;
 
