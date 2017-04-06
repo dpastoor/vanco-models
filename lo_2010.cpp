@@ -8,8 +8,8 @@ V   : 1.75  : Volume (L)
 wt  : 2.9   : Weight (kg)
 pma : 34.8  : post-menstral age (wk)
 scr : 0.9   : serum creatinine (mg/dL)
-Fsga :   ?  : small-for-gestational-age
-spiro :   ? : spironolactone (L/kg)
+Fsga : 1    : small-for-gestational-age
+spiro : 0   : spironolactone (L/kg)
 
 
 [CMT] @annotated
@@ -22,8 +22,6 @@ ncmt=1, trans=11
 D_CENT = 1; 
 double NORM_WT = 70;
 double NORM_PMA = 30;
-double Fsga = ?;
-double spiro = ?;
 double CLi = 1.0 * pow((wt/NORM_WT), 0.75) * pow((pma/NORM_PMA), 3.16) * Fsga
 double Vi = 0.572 * (1-0.344*spiro) * wt
 
