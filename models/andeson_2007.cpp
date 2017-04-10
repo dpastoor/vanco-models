@@ -10,8 +10,8 @@ pma : 34.8  : post-menstral age (wk)
 scr : 0.9   : serum creatinine (mg/dL)
 RDV : 0     : observed dv value (mg/L)
 CID : 0     : Base ID
-Fvent : 0   : Fraction positive pressure ventilation
-Finot : 0   : Fraction inotropic drugs
+Fvent : 1.03   : Scaling factor applied for use of positive pressure artificial ventilation
+Finot : 1.19   : Scaling factor applied for use of inotropes (use of dopamine)
 
 [CMT] @annotated
 CENT : Central compartment (mg)
@@ -27,12 +27,12 @@ double CLi = 3.83*pow(wt/NORM_WT,0.75)*(pow(pma, 3.68)/(pow(pma, 3.68) + pow(33.
 double Vi = 39.4*(wt/NORM_WT)*Finot;
 
 [OMEGA] @annotated
-  ECL : 0.04 : Eta on CL
-  EV  : 0.01 : Eta on V
+  ECL : 0.187 : Eta on CL
+  EV  : 0.194 : Eta on V
   
   [SIGMA] @annotated
-  PROP : 0.04 : Proportional error (%CV)
-  ADD  : 1.14  : Additive (SD)
+  PROP : 0.23 : Proportional error (%CV)
+  ADD  : 1.4  : Additive (SD)
   
   [TABLE]
 double CP = CENT/Vi;
@@ -48,5 +48,5 @@ double DV = CP*(1+PROP);
   scr : serum creatinine (mg/dL)
   RDV : observed dv value (mg/L)
   CID : Base ID
-  Fvent : Fraction positive pressure ventilation
-  Finot : Fraction inotropic drugs
+  Fvent : Scaling factor applied for use of positive pressure artificial ventilation
+  Finot : Scaling factor applied for use of inotropes (use of dopamine)
