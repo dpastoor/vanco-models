@@ -26,12 +26,12 @@ double CLi = 1.0 * pow((wt/NORM_WT), 0.75) * pow((pma/NORM_PMA), 3.16) * (0.83*S
 double Vi = 0.572 * (1-0.344*spiro) * wt
 
 [OMEGA] @annotated
-  ECL : 0.04 : Eta on CL
-  EV  : 0.01 : Eta on V
+  ECL : 20.5 : Eta on CL
+  EV  : 12.6 : Eta on V
   
   [SIGMA] @annotated
-  PROP : 0.04 : Proportional error (%CV)
-  ADD  : 1.14  : Additive (SD)
+  PROP : 22.9 : Proportional error (%CV)
+  ADD  : 1.51  : Additive (SD)
   
   [TABLE]
 double CP = CENT/Vi;
