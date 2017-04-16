@@ -28,6 +28,7 @@ double Vi = 0.572 * (1-0.344*spiro) * wt
 [OMEGA] @annotated
   ECL : 20.5 : Eta on CL
   EV  : 12.6 : Eta on V
+  BOV: 16.7 : BOV of C
   
   [SIGMA] @annotated
   PROP : 22.9 : Proportional error (%CV)
@@ -35,7 +36,7 @@ double Vi = 0.572 * (1-0.344*spiro) * wt
   
   [TABLE]
 double CP = CENT/Vi;
-double DV = CP*(1+PROP);
+double DV = CP*(1+PROP)+ADD;
 
 [CAPTURE] @annotated
   CP  : predicted plasma concentration (mg/L)
