@@ -38,7 +38,7 @@ IOVCL : 0.0256 : IOV on CL
 PROP : 0.0524 : Proportional error (%CV)
 ADD  : 2.28  : Additive (SD)
   
-  [TABLE]
+[TABLE]
 double CP = CENT/Vi;
 double DV = CP*(1+PROP) + ADD;
 
