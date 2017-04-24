@@ -19,16 +19,27 @@ models <- source("../models/models.R")$value
 
 ```{r}
 available_models <- models$available()
+available_models
 ```
 
 ```{r}
-model_list <- map(available_models, ~ models$use(.x)) %>% setNames(available_models)
+model_list <- map(available_models, function(.x) {
+  tryCatch(
+  models$use(.x),
+  error = function(e) {
+    return(e)
+  }
+  )
+} ) %>% setNames(available_models)
 ```
+## model information
 
 ```{r }
 tmp <- map(model_list, function(m) {
+  cat("\n ")
+  cat("---------------------------------------------------------")
+  cat("\n ")
   see(m)
-  cat("-----------------------------------")
   invisible()
   })
 ```
