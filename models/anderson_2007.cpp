@@ -1,7 +1,6 @@
 // details:
 // from anderson et al 2007 - Vancomycin pharmacokinetics in preterm neonates and 
 // the prediction of adult clearance.
-
 [PARAM] @annotated
 CL    : 3.83 : Clearance (L/hr)
 V     : 39.4 : Volume (L) 
@@ -29,13 +28,14 @@ double Fpma = pow(PMA, 3.68)/(pow(PMA, 3.68) + pow(33.3, 3.68));
 // publication serum creatinine in umol/L however standardizing to mg/dL so 
 // extra division by 88.42
 double CPR = 516*exp(Kage*((PMA-40)/(52-40)))/88.42;
-double CLcr = CPR/SCR;
-double CLi = CL*CLcr*pow(WT/NORM_WT,0.75)*Fpma*(Fvent*exp(VENT))*exp(ECL + IOVCL);
+double CLcr = CPR/SCR; // units of L/hr/70kg
+double Rf = CLcr/6; // Renal function is the ratio of predicted CLCR to standard CLCR of 6 L/hr/70kg
+double CLi = CL*Rf*pow(WT/NORM_WT,0.75)*Fpma*(Fvent*exp(VENT))*exp(ECL + IOVCL);
 double Vi = V*(WT/NORM_WT)*(Fiont*exp(IONT))*exp(EV);
 
 [OMEGA] @annotated @block @correlation @name IIV
 ECL : 0.044       : Eta on CL
-EV  : 0.897 0.039 : Eta on V
+EV  : 0.896 0.039 : Eta on V
 
 [OMEGA] @annotated @name IOV
 IOVCL : 0.0149 : Eta on IOV for CL  
@@ -59,6 +59,9 @@ SCR    : serum creatinine (mg/dL)
 VENT   : Ventillation status
 IONT   : ionotrope status
 Kage   : scaling constant of age on renal function
+CPR    : creatinine production rate age related fraction
+CLcr   : creatinine clearance (L/hr/70kg) 
+Rf     : scaling constant of age on renal function
 Fvent  : Scaling factor applied for use of positive pressure artificial ventilation
 Fiont  : Scaling factor applied for use of inotropes (use of dopamine)
 OCC    : Occasion
