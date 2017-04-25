@@ -40,7 +40,7 @@ double CLcr = CPR/SCR; // units of L/h/70kg
 double Rf = CLcr/STD_CLCR; // Renal function is the ratio of predicted CLCR to standard CLCR of 6 L/hr/70kg
   
 double CLi = CL*Rf*pow(WT/STD_WT,0.75)*Fpma*pow(Fvent,VENT)*exp(ECL + IOVCL);
-double Vi = V*(WT/STD_WT)*pow(Fiont, INOT)*exp(EV);
+double Vi = V*(WT/STD_WT)*pow(Finot, INOT)*exp(EV);
 
 [OMEGA] @annotated @block @correlation @name IIV
 ECL : 0.044       : Eta on CL
