@@ -34,6 +34,7 @@ double NORM_WT = 70;
 double Fpma = 1/(1+pow(PMA/EMATCL50,-HILLCL)); // more efficient calculation of sigmoid emax
 // publication creatinine production rate in umol/h however standardizing to dg/h (mg/dL=dg/L) so 
 // extra division by 88.42
+
 double CPR = STD_CPR/88.42*exp(Kage*((PMA-TERM_PMA)/52-STD_AGE)); // PMA converted to post-natal age (y)
 double CLcr = CPR/SCR; // units of L/h/70kg
 double Rf = CLcr/STD_CLCR; // Renal function is the ratio of predicted CLCR to standard CLCR of 6 L/hr/70kg
@@ -65,7 +66,7 @@ WT     : Weight (kg)
 PMA    : post-menstrual age (wk)
 SCR    : serum creatinine (mg/dL)
 VENT   : ventilation status
-IONT   : ionotrope status
+IONT   : inotrope status
 Kage   : scaling constant of PMA on predicted creatinine production rate
 CPR    : creatinine production rate age related fraction
 CLcr   : creatinine clearance (L/h/70kg) 
