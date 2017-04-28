@@ -2,18 +2,27 @@
 // from anderson et al 2007 - Vancomycin pharmacokinetics in preterm neonates and 
 // the prediction of adult clearance.
 [PARAM] @annotated
-CL    : 3.83 : Clearance (L/hr)
-V     : 39.4 : Volume (L) 
-WT    : 2.9  : Weight (kg)
-PMA   : 34.8 : post-menstral age (wk)
-SCR   : 0.9  : serum creatinine (mg/dL)
-VENT  : 0    : Ventillation status
-IONT  : 0    : ionotrope status
-Kage  : 0.00789 : scaling constant of age on renal function
-Fvent : 1.03 : Scaling factor applied for use of positive pressure artificial ventilation
-Fiont : 1.19 : Scaling factor applied for use of inotropes (use of dopamine)
-OCC   : 1     : Occasion
-  
+CL        : 3.83    : Clearance (L/h)
+V         : 39.4    : Volume (L) 
+WT        : 2.9     : Weight (kg)
+PMA       : 34.8    : post-menstral age (wk)
+EMATCL50  : 33.3    : PMA (wk) at 50% of mature clearance
+HILLCL    : 3.68    : Hill parameter for sigmoid Emax maturation
+SCR       : 0.9     : serum creatinine (mg/dL)
+VENT      : 0       : Ventilation status (0=no ventilation 1=ventilation)
+INOT      : 0       : Inotrope status (0=no inotrope 1=inotrope)
+Kage      : 0.00789 : scaling constant of age on renal function
+Fvent     : 1.03    : Scaling factor applied for use of positive pressure artificial ventilation
+Finot     : 1.19    : Scaling factor applied for use of inotropes (use of dopamine)
+OCC       : 1       : Occasion
+
+[FIXED] @annotated 
+STD_WT   : 70  : Standard weight (kg)
+STD_CLCR : 6   : Standard creatinine clearance (L/h/70kg)
+STD_CPR  : 516 : Creatinine production rate (umol/h/70kg)
+STD_AGE  : 40  : Standard age (y)
+TERM_PMA : 40  : PMA at full term (wk)
+
 [CMT] @annotated
 CENT : Central compartment (mg)
 
@@ -22,16 +31,16 @@ ncmt=1, trans=11
 
 [MAIN]
 D_CENT = 1; 
-double NORM_WT = 70;
-double NORM_PMA = 34.8;
-double Fpma = pow(PMA, 3.68)/(pow(PMA, 3.68) + pow(33.3, 3.68));
-// publication serum creatinine in umol/L however standardizing to mg/dL so 
+
+double Fpma = 1/(1+pow(PMA/EMATCL50,-HILLCL)); // more efficient calculation of sigmoid emax
+// publication creatinine production rate in umol/h however standardizing to dg/h (mg/dL=dg/L) so 
 // extra division by 88.42
-double CPR = 516*exp(Kage*((PMA-40)/(52-40)))/88.42;
-double CLcr = CPR/SCR; // units of L/hr/70kg
-double Rf = CLcr/6; // Renal function is the ratio of predicted CLCR to standard CLCR of 6 L/hr/70kg
-double CLi = CL*Rf*pow(WT/NORM_WT,0.75)*Fpma*(Fvent*exp(VENT))*exp(ECL + IOVCL);
-double Vi = V*(WT/NORM_WT)*(Fiont*exp(IONT))*exp(EV);
+double CPR = STD_CPR/88.42*exp(Kage*((PMA-TERM_PMA)/52-STD_AGE)); // PMA converted to post-natal age (y)
+double CLcr = CPR/SCR; // units of L/h/70kg
+double Rf = CLcr/STD_CLCR; // Renal function is the ratio of predicted CLCR to standard CLCR of 6 L/hr/70kg
+  
+double CLi = CL*Rf*pow(WT/STD_WT,0.75)*Fpma*pow(Fvent,VENT)*exp(ECL + IOVCL);
+double Vi = V*(WT/STD_WT)*pow(Finot, INOT)*exp(EV);
 
 [OMEGA] @annotated @block @correlation @name IIV
 ECL : 0.044       : Eta on CL
@@ -41,8 +50,8 @@ EV  : 0.896 0.039 : Eta on V
 IOVCL : 0.0149 : Eta on IOV for CL  
   
 [SIGMA] @annotated
-PROP : 0.053 : Proportional error (%CV)
-ADD  : 2.25  : Additive 
+PROP : 0.053 : Proportional error (variance)
+ADD  : 2.25  : Additive ((mg/L)^2)
   
 [TABLE]
 double CP = CENT/Vi;
@@ -54,14 +63,14 @@ DV     : plasma concentration (mg/L)
 CLi    : Individual Clearance (L/hr)
 Vi     : Individual Volume (L)
 WT     : Weight (kg)
-PMA    : post-menstral age (wk)
+PMA    : post-menstrual age (wk)
 SCR    : serum creatinine (mg/dL)
-VENT   : Ventillation status
-IONT   : ionotrope status
-Kage   : scaling constant of age on renal function
+VENT   : ventilation status
+INOT   : inotrope status
+Kage   : scaling constant of PMA on predicted creatinine production rate
 CPR    : creatinine production rate age related fraction
-CLcr   : creatinine clearance (L/hr/70kg) 
+CLcr   : creatinine clearance (L/h/70kg) 
 Rf     : scaling constant of age on renal function
 Fvent  : Scaling factor applied for use of positive pressure artificial ventilation
-Fiont  : Scaling factor applied for use of inotropes (use of dopamine)
+Finot  : Scaling factor applied for use of inotropes (use of dopamine)
 OCC    : Occasion
