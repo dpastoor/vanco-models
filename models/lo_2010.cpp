@@ -3,16 +3,19 @@
 // identification of predictors for dosing determination.
 
 [PARAM] @annotated
-CL    : 1     : Clearance (L/hr)
+CL    : 1    : Clearance (L/hr)
 V     : 36.6 : Volume (L) 
-WT    : 2.9   : Weight (kg)
-PMA   : 34.8  : post-menstral age (wk)
-SCR   : 0.9   : serum creatinine (mg/dL)
-SGA   : 0     : small-for-gestational-age
-SPIRO : 0     : spironolactone (L/kg)
-OCC   : 1     : Occasion
+WT    : 2.9  : Weight (kg)
+PMA   : 34.8 : post-menstral age (wk)
+SCR   : 0.9  : serum creatinine (mg/dL)
+SGA   : 0    : small-for-gestational-age
+SPIRO : 0    : spironolactone (L/kg)
+OCC   : 1    : Occasion
 
-
+[FIXED] @annotated
+STD_WT  : 70 : Standard weight (kg)
+REF_PMA : 30 : reference post-menstral age (weeks)
+  
 [CMT] @annotated
 CENT : Central compartment (mg)
 
@@ -21,10 +24,8 @@ ncmt=1, trans=11
 
 [MAIN]
 D_CENT = 1; 
-double NORM_WT = 70;
-double NORM_PMA = 30;
-double CLi = CL * pow((WT/NORM_WT), 0.75) * pow((PMA/NORM_PMA), 3.16) * (0.83*SGA + 1.03*(1-SGA))*exp(ECL+IOVCL);
-double Vi = V * (1-0.344*SPIRO) * WT/NORM_WT * exp(EV);
+double CLi = CL*pow((WT/STD_WT), 0.75)*pow((PMA/REF_PMA),3.16)*(0.83*SGA + 1.03*(1-SGA))*exp(ECL+IOVCL);
+double Vi = V*(1-0.344*SPIRO)*WT/STD_WT*exp(EV);
 
 [OMEGA] @annotated @name IIV
 ECL : 0.042 : Eta on CL
@@ -43,12 +44,12 @@ double CP = CENT/Vi;
 double DV = CP*(1+PROP) + ADD;
 
 [CAPTURE] @annotated
-  CP  : predicted plasma concentration (mg/L)
-  DV  : plasma concentration (mg/L)
-  CLi : Individual Clearance (L/hr)
-  Vi  : Individual Volume (L)
-  WT  : Weight (kg)
-  PMA : post-menstral age (wk)
-  SCR : serum creatinine (mg/dL)
-  SGA : small-for-gestational-age
-  SPIRO : spironolactone (L/kg)
+CP  : predicted plasma concentration (mg/L)
+DV  : plasma concentration (mg/L)
+CLi : Individual Clearance (L/hr)
+Vi  : Individual Volume (L)
+WT  : Weight (kg)
+PMA : post-menstral age (wk)
+SCR : serum creatinine (mg/dL)
+SGA : small-for-gestational-age
+SPIRO : spironolactone (L/kg)
