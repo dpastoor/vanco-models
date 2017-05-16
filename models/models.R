@@ -11,6 +11,7 @@ models <- Overseer$new()
 models$add_model_file("frymoyer_2014.cpp")
 models$add_model_file("lo_2010.cpp")
 models$add_model_file("anderson_2007.cpp")
+models$add_model_file("allegaert_2007.cpp")
 
 
 # add model files below
