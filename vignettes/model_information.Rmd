@@ -44,6 +44,18 @@ tmp <- map(model_list, function(m) {
   })
 ```
 
+common variables between models:
+
+```{r}
+ model_list %>% names %>% map_df(~ {
+  mrgsolve:::details(model_list[[.x]]) %>%
+    filter(block == "PARAM", !(name %in% c("CL", "V"))) %>%
+     select(-block, -descr, -options) %>%
+     mutate(model = .x)%>%
+     spread(name, unit)
+  }) %>% select_if(~!any(is.na(.x)))
+```
+
 
 ```{r}
 devtools::session_info()
