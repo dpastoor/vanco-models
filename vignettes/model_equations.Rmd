@@ -1,0 +1,55 @@
+---
+title: "Vancomycin Equations"
+output:
+  pdf_document: default
+---
+
+# anderson_2007
+
+$F_{pma} = 1/(1+\left(\frac{PMA}{EMAT_{CL50}}\right)^{-HILL_{CL}})$
+
+$CPR = STD_{CPR}/88.42^{K_{age}\cdot(PMA-TERM_{PMA}/52-STD_{AGE})}$
+
+$CL_{cr} = CPR/SCR$
+
+$R_{f} = CLcr/STD_CLCR$
+
+$CL_{i} = CL_{i} = CL \cdot R_{f}(WT/SD_WT)^{0.75} \cdot F_{pma} \cdot F_{vent}^{VENT} \cdot exp(ECL+IOVCL)$
+
+$V_{i} = V \cdot (WT/STD_{WT}) \cdot F_{inot}^{INOT} \cdot exp(EV)$
+
+
+# allegaert_2007
+
+$NORM_{WT} = 70$
+
+$FPMA = exp(SLPCL \cdot (PMA-30))$
+
+$CPR = 516 \cdot exp(KAGE \cdot ((PMA-30)/(52-40)))/88.42$
+
+$CLCR = \frac{CPR}{SCR}$
+
+$RF = \frac {CLCR}{6}$
+
+$CL_{i} = {CL \cdot RF \cdot \frac{WT}{NORM_{WT}}^{0.75} \cdot FPMA \cdot FNXOC^{NCOX} \cdot FSGA^{SGA}} ^{ECL + IOVCL}$
+
+$V_{i} = V \cdot \frac{WT}{NORM_{WT}}^{EV}$
+
+
+# frymoyer_2014
+
+$NORM_{WT} = 2.9$
+
+$NORM_{PMA} = 34.8$
+
+$CL_{i} = {CL \cdot (\frac {WT}{NORM_{WT}})^{0.75} \cdot \frac {1}{1 + \frac {PMA}{NORM_{PMA}}^{4.53}} \cdot \frac {1}{SCR}^{0.267}}^{ECL}$
+
+$V_{i} = {V \cdot \frac {WT}{NORM_{WT}}}^{EV}$
+
+
+# lo_2010
+
+$CL_{i} = {CL \cdot \frac {WT}{STD_{WT}}^{0.75} \cdot \frac {PMA}{REF_{PMA}}^{3.16} \cdot (0.83 \cdot SGA + 1.03 \cdot (1-SGA))}^{(ECL+IOVCL)}$
+
+$V_{i} = V \cdot (1-0.344 \cdot SPIRO) \cdot \frac {WT}{STD_{WT}}^{EV}$
+
