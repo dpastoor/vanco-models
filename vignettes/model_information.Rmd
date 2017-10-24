@@ -12,7 +12,7 @@ library(overseer)
 
 
 ```{r}
-models <- source("../models/models.R")$value
+models <- overseer::source_models("../models/models.R")
 ```
 
 
@@ -25,7 +25,7 @@ available_models
 ```{r}
 model_list <- map(available_models, function(.x) {
   tryCatch(
-  models$use(.x),
+    models$use(.x),
   error = function(e) {
     return(e)
   }
